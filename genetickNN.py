@@ -12,14 +12,9 @@ names = ["age", "job", "Maritial Status", "Education", "has Credit?", "balance (
          "Personal Loan?", "Comm type", "Day", "Month", "Duration", "Campaign", "pdays", "previous", "poutcome", "y or n"]
 dataset = pd.read_csv("MyData.csv", names=names)
 
-def make_fig():
-    plt.scatter(x_values, y_values) 
-
-plt.ion()  
-fig = plt.figure() 
-
 x_values = list()
 y_values = list()
+
 
 def randSelection(x):
     return [random.randint(0, 1) for i in range(x)]
@@ -56,12 +51,12 @@ def getFitness(dataset, vector_1):
         if(vector_1[i] == 1):
             chose_columns.append(i)
         i += 1
-    # all features#CHANGE THIS FUCKING COMMANDS
+    # all features
     X = dataset.iloc[:, chose_columns].values
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
     classifier.fit(X_train, y_train)
     y_pred = classifier.predict(X_test)
-    print(y_pred)
+    # print(y_pred)
     for k in range(len(y_test)):
         if y_pred[k] == 1 and y_test[k] == 1:
             tp += 1
@@ -74,7 +69,6 @@ def getFitness(dataset, vector_1):
     return mcc_func(tp, tn, fp, fn)
 
 
-
 parent_1 = randSelection(16)
 parent_2 = randSelection(16)
 parent_3 = randSelection(16)
@@ -84,7 +78,8 @@ parent_6 = randSelection(16)
 parent_7 = randSelection(16)
 parent_8 = randSelection(16)
 counter = 0
-while(True):
+loop_counter = 0
+while(loop_counter <= 1500):
     mcc_1 = getFitness(dataset, parent_1)
     mcc_2 = getFitness(dataset, parent_2)
     mcc_3 = getFitness(dataset, parent_3)
@@ -126,6 +121,8 @@ while(True):
     counter = counter+1
     x_values.append(counter)
     y_values.append(mcc_df.iloc[7].mcc)
-    plt.scatter(x_values,y_values)
-    plt.show()
-    plt.pause(0.0001)
+    loop_counter += 1
+plt.ion()
+fig = plt.figure()
+plt.scatter(x_values, y_values)
+plt.show(block=True)
