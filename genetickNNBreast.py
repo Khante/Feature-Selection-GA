@@ -8,9 +8,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import matplotlib.pyplot as plt
 
-names = ["age", "job", "Maritial Status", "Education", "has Credit?", "balance (Euros)", "Home loan?",
-         "Personal Loan?", "Comm type", "Day", "Month", "Duration", "Campaign", "pdays", "previous", "poutcome", "y or n"]
-dataset = pd.read_csv("MyData.csv", names=names)
+names = ["1","2","3","4","5","6","7","8","9","10"]
+dataset = pd.read_csv("BreastNorm.csv", names=names)
 
 x_values = list()
 y_values = list()
@@ -30,8 +29,8 @@ def mcc_func(tp, tn, fp, fn):
 
 
 def cross(vector_1, vector_2):
-    vector_3 = [vector_1[0], vector_1[1], vector_1[2], vector_1[3], vector_1[4], vector_1[5],
-                vector_2[6], vector_2[7], vector_2[8], vector_2[9]]
+    vector_3 = [vector_1[0], vector_1[1], vector_1[2], vector_1[3], vector_1[4],
+                vector_2[5], vector_2[6], vector_2[7], vector_2[8]]
     return(vector_3)
 
 
@@ -44,7 +43,8 @@ def mutate(vector_1):
 def getFitness(dataset, vector_1):
     i = 0
     (tp, tn, fp, fn) = (0, 0, 0, 0)
-    y = dataset.iloc[:, 10].values  # labels
+    y = dataset.iloc[:, 9].values  # labels
+    print(y)
     classifier = KNeighborsClassifier(n_neighbors=49)
     chose_columns = []
     while(i < len(vector_1)):
@@ -79,7 +79,7 @@ parent_7 = randSelection(9)
 parent_8 = randSelection(9)
 counter = 0
 loop_counter = 0
-while(loop_counter <= 1500):
+while(loop_counter <= 10):
     mcc_1 = getFitness(dataset, parent_1)
     mcc_2 = getFitness(dataset, parent_2)
     mcc_3 = getFitness(dataset, parent_3)
